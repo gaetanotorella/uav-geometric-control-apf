@@ -1,0 +1,16 @@
+<launch>
+  
+    <arg name="x_goal" default="0.0"/>
+    <arg name="y_goal" default="0.0"/>
+    <arg name="z_goal" default="2.0"/>
+    <arg name="version" default="offline"/>
+
+    <param name="x_goal" value="$(arg x_goal)"/>
+    <param name="y_goal" value="$(arg y_goal)"/>
+    <param name="z_goal" value="$(arg z_goal)"/>
+    <param name="version" value="$(arg version)"/>
+
+    <node name="momentum_estimator" pkg="geometric_controller" type="momentum_estimator" output="screen"/>
+    <node name="APF_method_$(arg version)" pkg="geometric_controller" type="APF_method_$(arg version)" output="screen"/>
+
+</launch>
