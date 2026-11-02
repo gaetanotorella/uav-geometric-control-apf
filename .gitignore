@@ -1,0 +1,18 @@
+# MATLAB/Simulink
+slprj/
+*.slxc
+*.asv
+*.autosave
+*.mex*
+*~
+
+# ROS
+*.bag
+build/
+devel/
+logs/
+__pycache__/
+*.pyc
+
+# OS
+.DS_Store
