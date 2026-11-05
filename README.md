@@ -47,11 +47,12 @@ the APF in the loop, the position error of the geometric controller stays around
 
 Offline APF in Gazebo:
 
-https://github.com/user-attachments/assets/4994c09c-fcf5-4eb4-8782-62c19b83f6e6
+https://github.com/user-attachments/assets/55e5460c-3663-461d-9f11-0e77646f7d14
 
-Online APF with the LiDAR (Gazebo on top; onboard camera and point cloud in RViz below):
+Online APF with the LiDAR (Gazebo on top, onboard camera bottom left, point cloud in RViz bottom right):
 
-https://github.com/user-attachments/assets/fe69edc4-9da9-4946-91f7-0fea17f3d348
+https://github.com/user-attachments/assets/e65f0698-3dd9-4095-9674-cb3982ff717d
+
 
 ## Repository structure
 
