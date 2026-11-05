@@ -14,6 +14,14 @@ Authors: **Stefano Riccardi** and **Gaetano Torella**. Full report: [docs/report
 
 ## Method
 
+<div align="center">
+
+| <img src="docs/media/scheme_apf.png" width="400" alt="Block diagram of the whole system"> | <img src="docs/media/scheme_geometric_control.png" width="320" alt="Block diagram of the geometric controller"> |
+|:---:|:---:|
+| The whole system: the APF moves the reference of the controller | The geometric controller: trajectory and attitude tracking |
+
+</div>
+
 - **Geometric control.** An outer loop turns the position error into the desired thrust and attitude; an inner
   loop tracks the attitude on SO(3) and computes the torques. Working on rotation matrices avoids the
   singularities of Euler angles.
@@ -38,12 +46,31 @@ the APF in the loop, the position error of the geometric controller stays around
 
 **ROS/Gazebo (RotorS, AR.Drone model).** The controller sends roll, pitch, yaw rate and thrust commands to RotorS.
 
-<p align="center"><img src="docs/media/gazebo_scenario.png" width="640" alt="Gazebo world with three cylindrical obstacles"></p>
+*Mass estimation.* With the nominal mass of 1.5 kg the position error keeps an offset of about 0.2 m along z. The
+estimator gives a real mass of about **1.63 kg**; with this value the steady-state error goes to zero:
 
-- With the nominal mass of 1.5 kg the position error keeps a constant offset. The estimator gives a real mass of
-  about **1.63 kg**; with this value the steady-state error goes to zero.
-- Online APF: the UAV avoids the obstacles it sees with the LiDAR. As with every potential field, it can stop in a
-  **local minimum** where the attractive and repulsive forces cancel out; the report shows one such case.
+<div align="center">
+
+| <img src="docs/media/position_error_mass_1.5.png" width="372" alt="Position error with a mass of 1.5 kg"> | <img src="docs/media/position_error_mass_1.6335.png" width="348" alt="Position error with a mass of 1.6335 kg"> |
+|:---:|:---:|
+| m = 1.5 kg | m = 1.6335 kg (note the different scales) |
+
+</div>
+
+*Online APF.* The UAV avoids the obstacles it sees with the LiDAR, without knowing them in advance:
+
+<p align="center"><img src="docs/media/lidar_point_cloud.png" width="420" alt="The UAV and the LiDAR point cloud of an obstacle in RViz"></p>
+
+As with every potential field, it can stop in a **local minimum**. In the `test_city` world the last goal is beyond
+an obstacle: the attractive and repulsive forces almost cancel out and the UAV does not reach it.
+
+<div align="center">
+
+| <img src="docs/media/test_city_world.jpg" width="356" alt="The test_city world in Gazebo"> | <img src="docs/media/local_minimum_rviz.png" width="363" alt="The local minimum in RViz"> |
+|:---:|:---:|
+| The `test_city` world in Gazebo | The local minimum in RViz |
+
+</div>
 
 Offline APF in Gazebo:
 
@@ -72,7 +99,6 @@ https://github.com/user-attachments/assets/e65f0698-3dd9-4095-9674-cb3982ff717d
 ## MATLAB/Simulink
 
 Requirements: MATLAB and Simulink with UAV Toolbox, Robotics System Toolbox and ROS Toolbox.
-<!-- TODO: MATLAB version used -->
 
 Open MATLAB in one of the folders of `matlab/` and run its script: `apf_waypoint_offline_script.m`,
 `apf_offline_script.m`, `estimator_script.m` or `plot_rosbag.m`. The last two read a ROS bag recorded in Gazebo:
